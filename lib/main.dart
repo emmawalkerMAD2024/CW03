@@ -1,5 +1,4 @@
-import 'dart:async'; // Importing Timer
-
+import 'dart:async'; 
 import 'package:flutter/material.dart';
 
 void main() {
@@ -17,46 +16,45 @@ class _DigitalPetAppState extends State<DigitalPetApp> {
   String petName = "Jared II";
   int happinessLevel = 50;
   int hungerLevel = 50;
-  Color petColor = Colors.yellow; // Default color for neutral state
+  Color petColor = Colors.yellow; 
   TextEditingController nameController = TextEditingController();
   bool nameConfirmed = false;
-  Timer? hungerTimer; // Timer for decreasing hunger automatically
+  Timer? hungerTimer; 
 
   @override
   void initState() {
     super.initState();
-    _startHungerTimer(); // Start the hunger timer when the app starts
+    _startHungerTimer(); 
   }
 
   @override
   void dispose() {
-    hungerTimer?.cancel(); // Cancel the timer when the app is disposed
+    hungerTimer?.cancel(); 
     super.dispose();
   }
 
-  // Function to start the hunger timer
+ 
   void _startHungerTimer() {
     hungerTimer = Timer.periodic(Duration(seconds: 30), (timer) {
       setState(() {
-        hungerLevel = (hungerLevel - 5).clamp(0, 100); // Decrease hunger level by 5 every 30 seconds
-        _updateHappiness(); // Update happiness based on hunger
-        _updatePetColor(); // Update color based on happiness
+        hungerLevel = (hungerLevel - 5).clamp(0, 100); 
+        _updateHappiness(); 
+        _updatePetColor(); 
       });
     });
   }
 
-  // Function to update pet color based on happiness level
+
   void _updatePetColor() {
     if (happinessLevel > 70) {
-      petColor = Colors.green; // Happy
+      petColor = Colors.green; 
     } else if (happinessLevel >= 30) {
-      petColor = Colors.yellow; // Neutral
+      petColor = Colors.yellow; 
     } else {
-      petColor = Colors.red; // Unhappy
+      petColor = Colors.red;
     }
   }
 
-  // Function to get the pet's mood text and emoji
   String _getPetMood() {
     if (happinessLevel > 70) {
       return 'Happy 😊';
@@ -67,45 +65,41 @@ class _DigitalPetAppState extends State<DigitalPetApp> {
     }
   }
 
-  // Function to increase happiness and update hunger when playing with the pet
   void _playWithPet() {
     setState(() {
       happinessLevel = (happinessLevel + 10).clamp(0, 100);
       _updateHunger();
-      _updatePetColor(); // Update color based on happiness
+      _updatePetColor(); 
     });
   }
 
-  // Function to decrease hunger and update happiness when feeding the pet
   void _feedPet() {
     setState(() {
       hungerLevel = (hungerLevel - 10).clamp(0, 100);
       _updateHappiness();
-      _updatePetColor(); // Update color based on happiness
+      _updatePetColor(); 
     });
   }
 
-  // Update happiness based on hunger level
   void _updateHappiness() {
     if (hungerLevel < 30) {
       happinessLevel = (happinessLevel + 20).clamp(0, 100);
     } else {
       happinessLevel = (happinessLevel + 10).clamp(0, 100);
     }
-    _updatePetColor(); // Update color based on happiness
+    _updatePetColor(); 
   }
 
-  // Increase hunger level slightly when playing with the pet
+
   void _updateHunger() {
     hungerLevel = (hungerLevel + 5).clamp(0, 100);
     if (hungerLevel > 100) {
       hungerLevel = 100;
       happinessLevel = (happinessLevel - 20).clamp(0, 100);
     }
-    _updatePetColor(); // Update color based on happiness
+    _updatePetColor(); 
   }
 
-  // Function to confirm the pet's name
   void _confirmName() {
     setState(() {
       petName = nameController.text;
@@ -129,7 +123,7 @@ class _DigitalPetAppState extends State<DigitalPetApp> {
                     height: 100,
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      color: petColor, // Dynamic color based on happiness
+                      color: petColor, 
                     ),
                     child: Center(
                       child: Text(
@@ -140,9 +134,8 @@ class _DigitalPetAppState extends State<DigitalPetApp> {
                   ),
                   SizedBox(height: 16.0),
                   
-                  // Adding the image of the pet
                   Image.asset(
-                    'C:/Users/emmaw/Downloads/CATWHITE.png', // Replace with the path of your image asset
+                    'C:/Users/emmaw/Downloads/CATWHITE.png', 
                     width: 150,
                     height: 150,
                     fit: BoxFit.cover,
@@ -159,10 +152,9 @@ class _DigitalPetAppState extends State<DigitalPetApp> {
                     style: TextStyle(fontSize: 20.0),
                   ),
                   
-                  // Display mood indicator
                   SizedBox(height: 16.0),
                   Text(
-                    'Mood: ${_getPetMood()}', // Show mood and emoji
+                    'Mood: ${_getPetMood()}',
                     style: TextStyle(fontSize: 24.0),
                   ),
                   
